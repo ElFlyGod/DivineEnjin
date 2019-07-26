@@ -64,6 +64,7 @@ public class EnjinMinecraftPlugin extends JavaPlugin implements EnjinPlugin {
     private static EnjinMinecraftPlugin   instance;
     private static ExecutedCommandsConfig executedCommandsConfiguration;
     private static RankUpdatesConfig      rankUpdatesConfiguration;
+    private static final Object rankUpdatesConfigurationLock = new Object();
     @Getter
     private        InstructionHandler     instructionHandler = new BukkitInstructionHandler();
     @Getter
@@ -305,7 +306,10 @@ public class EnjinMinecraftPlugin extends JavaPlugin implements EnjinPlugin {
         }
 
         if (rankUpdatesConfiguration != null) {
-            rankUpdatesConfiguration.save(new File(instance.getDataFolder(), "rankUpdates.json"));
+            synchronized (rankUpdatesConfigurationLock) {
+                Bukkit.getScheduler().runTaskAsynchronously(getInstance(),
+                        () -> rankUpdatesConfiguration.save(new File(instance.getDataFolder(), "rankUpdates.json")));
+            }
         } else {
             Enjin.getLogger().warning("Unable to load rank updates configuration. Please contact Enjin support.");
         }

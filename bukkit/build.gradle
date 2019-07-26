@@ -25,6 +25,8 @@ repositories {
     maven { url 'http://nexus.hc.to/content/repositories/pub_releases' }
     maven { url 'https://repo.bstats.org/content/repositories/releases' }
     maven { url 'http://repo.kitteh.org/content/groups/public' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/releases/' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 }
 
 dependencies {
